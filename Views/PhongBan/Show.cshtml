@@ -1,0 +1,48 @@
+﻿@{
+    ViewBag.Title = "Show";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="col mt-4">
+    <div class="card">
+        <div class="car-header text-md-center">
+            <h2>Danh sách phòng ban</h2>
+
+        </div>
+        <div class="card-body">
+            <div class="text-md-center">
+                <button class="btn btn-outline-success"><a href="~/PhongBan/Add_PhongBan_Record">Add</a></button>
+            </div>
+            @*<div class="alert alert-primary" role="alert">
+                <i>[[${message}]]</i>
+            </div>*@
+            <table class="table table-striped table-inverse">
+                <thead class="thead-inverse">
+                    <tr class="text-md-center">
+                        <th class="align-middle"></th>
+                        <th class="align-middle">ID phòng ban</th>
+                        <th class="align-middle">Tên phòng ban</th>
+                        <th class="align-middle">Actions</th>
+                        <th ></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (System.Data.DataRow item in ViewBag.pb.Rows)
+                    {
+                        <tr class="text-md-center">
+                            <td  class="align-middle"></td>
+                            <td  class="align-middle">@item["ID"]</td>
+                            <td  class="align-middle">@item["TenPB"]</td>
+                            <td  class="align-middle">
+
+                                <a href="~/PhongBan/Update_PhongBan_Record?ID=@item["ID"]" class="btn btn-outline-warning"><i class="fas fa-edit"></i></a>
+                                <a href="~/PhongBan/Delete_PhongBan_Record?ID=@item["ID"]" class="btn btn-outline-danger"><i class="fas fa-recycle"></i></a>
+                            </td>
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,150 @@
+﻿@model IEnumerable<Quanlicaan.Models.DTO.ThongKeTheoThangModel>
+
+@{
+    ViewBag.Title = "Thống kê theo tháng";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="container p-lg-3 table-active border">
+    <div class="text-md-center">
+        @using (Html.BeginForm("ThongKeTheoThang", "BaoCao", FormMethod.Get, new { id = "myForm" }))
+        {
+            <p> <b>THỐNG KÊ ĂN CA THÁNG: @Html.TextBox("month", DateTime.Now.ToString("yyyy-MM"), new { type = "month", id = "month", onchange = "submitForm()" }) </b> </p>
+        }
+
+    </div>
+    @{
+        int countTmp = 0;
+        HashSet<string> dsPhongBanTmp = new HashSet<string>();
+        foreach (var item in Model)
+        {
+            dsPhongBanTmp.Add(item.TenPhongBan);
+        }
+        List<string> dsPhongBan = new List<string>();
+        dsPhongBan.AddRange(dsPhongBanTmp);
+        //đến bên trên là đúng r
+        HashSet<int> dsIDNguoiAn = new HashSet<int>();
+        //lấy ra danh sách người ăn full với tiêu chí: nếu số lượng mà khác không thì lấy
+        HashSet<int> dsIDChiTietCaAn = new HashSet<int>();
+        HashSet<int> dsIDNguoiAnFullTmp = new HashSet<int>();
+        foreach (var item in Model)
+        {
+            if (item.SoLuong != 0)
+            {
+                dsIDNguoiAnFullTmp.Add(item.IDNguoiAn);
+            }
+        }
+        List<int> dsIDNguoiAnFull = new List<int>();
+        dsIDNguoiAnFull.AddRange(dsIDNguoiAnFullTmp);
+        <div class="content">
+            <table class="table table-striped table-hover border-bottom table-bordered ">
+                <tr class="bg-primary">
+                    <th class="text-md-center border-right">STT</th>
+                    <th class="text-md-center border-right">Họ tên</th>
+                    <th class="text-md-center border-right">Ca 1</th>
+                    <th class="text-md-center border-right">Ca 2</th>
+                    <th class="text-md-center border-right">Ca 3</th>
+                    <th class="text-md-center border-right">Tổng</th>
+                    <th class="text-md-center border-right">Thành tiền</th>
+                </tr>
+                @for (int i = 0; i < dsPhongBan.Count(); i++)
+                {
+                    <tr class="table-warning">
+                        <td colspan="7"> Phòng: @dsPhongBan[i]</td>
+                    </tr>
+                    int countTongCa1 = 0;
+                    int countTongCa2 = 0;
+                    int countTongCa3 = 0;
+                    int tongToanBo = 0;
+                    long tongThanhTien = 0;
+                    for (int j = 0; j < dsIDNguoiAnFull.Count(); j++)
+                    {
+                        int countSLCa1 = 0;
+                        int countSLCa2 = 0;
+                        int countSLCa3 = 0;
+                        string tenNguoiAnTmp = "";
+                        foreach (var item in Model)
+                        {
+                            if (dsIDNguoiAnFull[j] == item.IDNguoiAn)
+                            {
+                                tenNguoiAnTmp = item.TenNhanVien;
+                                break;
+                            }//lấy ra tên người ăn dựa vào Model
+                        }
+                        foreach (var item in Model)
+                        {
+                            if (dsPhongBan[i] == item.TenPhongBan && dsIDNguoiAnFull[j] == item.IDNguoiAn && item.IDCaAn == 1 && !dsIDChiTietCaAn.Contains(item.ID))
+                            {
+                                countSLCa1 += item.SoLuong;
+                                dsIDChiTietCaAn.Add(item.ID);
+                            }
+                            if (dsPhongBan[i] == item.TenPhongBan && dsIDNguoiAnFull[j] == item.IDNguoiAn && item.IDCaAn == 2 && !dsIDChiTietCaAn.Contains(item.ID))
+                            {
+                                countSLCa2 += item.SoLuong;
+                                dsIDChiTietCaAn.Add(item.ID);
+
+                            }
+                            if (dsPhongBan[i] == item.TenPhongBan && dsIDNguoiAnFull[j] == item.IDNguoiAn && item.IDCaAn == 3 && !dsIDChiTietCaAn.Contains(item.ID))
+                            {
+                                countSLCa3 += item.SoLuong;
+                                dsIDChiTietCaAn.Add(item.ID);
+                            }
+                        }
+                        int flag = 0;
+                        if (countSLCa1 == 0 && countSLCa2 == 0 && countSLCa3 == 0)
+                        {
+                            flag = 1;
+
+                        }
+                        if (flag == 0)
+                        {
+                            countTmp++;
+                            <tr class="table-primary text-md-center border-bottom">
+                                <td class="font-weight-bold">@countTmp</td>
+                                <td>@tenNguoiAnTmp</td>
+                                <td>@countSLCa1</td>
+                                <td>@countSLCa2</td>
+                                <td>@countSLCa3</td>
+                                @{ int tongSL = countSLCa1 + countSLCa2 + countSLCa3;
+                                    long thanhTien = tongSL * 15000;}
+                                <td>@tongSL</td>
+                                <td>@thanhTien đ</td>
+                            </tr>
+                            countTongCa1 += countSLCa1;
+                            countTongCa2 += countSLCa2;
+                            countTongCa3 += countSLCa3;
+                            tongToanBo += tongSL;
+                            tongThanhTien += thanhTien;
+
+                        }
+                        flag = 0;
+
+                    }
+                    <tr class="table-success text-md-center border-bottom font-weight-bold">
+                        <td></td>
+                        <td>Tổng</td>
+                        <td>@countTongCa1</td>
+                        <td>@countTongCa2</td>
+                        <td>@countTongCa3</td>
+                        <td>@tongToanBo</td>
+                        <td>@tongThanhTien đ</td>
+                    </tr>
+                    countTmp = 0;
+                }
+
+            </table>
+
+        </div>
+
+
+    }
+</div>
+
+
+<script type="text/javascript">
+    function submitForm() {
+        document.getElementById("myForm").submit();
+    }
+</script>
+

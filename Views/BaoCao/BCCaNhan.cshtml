@@ -1,0 +1,70 @@
+﻿@using Quanlicaan.Models;
+@model IEnumerable<Quanlicaan.Models.ThongKeCaNhanModel>
+
+@{
+    ViewBag.Title = "Thống kê cá nhân";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="text-md-center">
+    <h1 class="display-4 p-3">THỐNG KÊ CA ĂN CÁ NHÂN</h1>
+    @{
+        var info = (UserLoginModel)Session["UserSession"];
+        <Label class="h5" for="uname">Họ tên:</Label>
+        <span class="h5">@info.hoTen</span>
+        <br>
+        <Label class="h5" for="pban">Phòng ban:</Label>
+        <span class="h5">@info.PhongBan</span>
+
+    }
+
+</div>
+<div class="container p-lg-3 table-active border">
+    <table class="table table-striped table-hover border-bottom table-bordered ">
+        <thead>
+            <tr class="bg-primary">
+                <th class="text-md-center border-right">STT</th>
+                <th class="text-md-center border-right">Ngày</th>
+                <th class="text-md-center border-right">Ca 1</th>
+                <th class="text-md-center border-right">Ca 2</th>
+                <th class="text-md-center border-right">Ca 3</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                int count = 1;
+                int tongCa1 = 0;
+                int tongCa2 = 0;
+                int tongCa3 = 0;
+                foreach (var item in Model)
+                {
+
+                    <tr class="table-primary">
+                        <td class="text-md-center border-bottom font-weight-bold">@count</td>
+                        <td class="text-md-center border-bottom"><span>@item.ngayDK</span></td>
+
+                        <td class="text-md-center border-bottom"> <span>@item.SLCa1</span> </td>
+                        <td class="text-md-center border-bottom"> <span>@item.SLCa2</span> </td>
+                        <td class="text-md-center border-bottom"> <span>@item.SLCa3</span> </td>
+                    </tr>
+
+                    tongCa1 += item.SLCa1;
+                    tongCa2 += item.SLCa2;
+                    tongCa3 += item.SLCa3;
+                    count++;
+                }
+            <tfoot>
+                <tr class="table-warning">
+                    <td class="text-md-center bg-info border-bottom"></td>
+                    <td class="text-md-center border-bottom bg-info font-weight-bold">Tổng</td>
+                    <td class="text-md-center border-bottom bg-info font-weight-bold">@tongCa1</td>
+                    <td class="text-md-center border-bottom  bg-info font-weight-bold">@tongCa2</td>
+                    <td class="text-md-center border-bottom bg-info font-weight-bold">@tongCa3</td>
+                </tr>
+            </tfoot>
+            }
+
+            </tbody>
+        </table>
+</div>
+

@@ -1,0 +1,22 @@
+﻿@using Quanlicaan.Models;
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<p class="display-4 text-md-center">
+    chào mừng bạn đến với ứng dụng quản lí ca ăn
+    @{
+        var info = (UserLoginModel)Session["UserSession"];
+        <div class="text-md-center">
+            <p class="lead">họ tên: @info.hoTen</p>
+            <p class="lead">phòng ban: @info.PhongBan</p>
+            <p class="lead">quyền đăng ký: @info.quyen</p>
+            <p class="lead">thời gian đăng nhập: @DateTime.Now</p>
+        </div>
+
+    }
+    </p>
+

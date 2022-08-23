@@ -1,0 +1,229 @@
+﻿@model Quanlicaan.Models.DangKyTapTheModel
+
+@using Quanlicaan.Models;
+@{
+    ViewBag.Title = "TapThe";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    int count = 0;
+    var message = ViewData["message2"] ?? string.Empty;
+    if (@message != "")
+    {
+        <script>
+    alert('@message');
+        </script>
+    }
+}
+
+
+
+
+
+<div class="container-fluid px-1 py-5 mx-auto">
+    <div class="row d-flex justify-content-center">
+        <div class="col-xl-7 col-lg-8 col-md-9 col-11 text-center">
+            <h3>Đăng ký tập thể</h3>
+         
+            <div class="card">
+                <h5 class="text-center mb-4">phiếu đăng ký ăn tập thể</h5>
+
+                @using (Html.BeginForm("XuLyDangKyTapThe", "CaAn", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                    <form class="form-card" onsubmit="event.preventDefault()">
+                        <div class="row justify-content-between text-left">
+                            <div class="form-group col-sm-6 flex-column d-flex">
+                                <label class="form-control-label px-3">
+                                    Họ tên người đăng kí
+                                    <span class="text-danger">
+                                        *
+                                    </span>
+                                </label>
+                                @Html.EditorFor(model => model.hoTenNDK, new
+                                {
+                                    htmlAttributes = new
+                                    {
+                                        @class =
+                                "form-control",
+                                        @readonly =
+                                "true"
+                                    }
+                                })
+
+                            </div>
+                            <div class="form-group col-sm-6 flex-column d-flex">
+                                <label class="form-control-label px-3">Phòng ban<span class="text-danger"> *</span></label>
+                                @Html.EditorFor(model => model.phongBan, new
+                                {
+                                    htmlAttributes = new
+                                    {
+                                        @class =
+                                "form-control",
+                                        @readonly =
+                                "true"
+                                    }
+                                })
+                            </div>
+                        </div>
+                        <div class="row justify-content-between text-left">
+                            <div class="form-group col-12 flex-column d-flex">
+                                <label class="form-control-label px-3">
+                                    Ngày đăng ký<span class="text-danger">
+                                        *
+                                    </span>
+                                </label> @Html.EditorFor(model => model.ngayDK, new
+{
+htmlAttributes = new
+{
+@class =
+"form-control",
+@readonly =
+"true"
+}
+})
+                            </div>
+                        </div>
+                        @for (int i = 0; i < Model.dsNV.Count; i++)
+                        {
+                            <div class="row justify-content-between text-left">
+                                <div class="form-group col-12 flex-column d-flex">
+                                    <label class="form-control-label px-3">
+                                        Họ tên<span class="text-danger">
+                                            *
+                                        </span>
+                                    </label>
+                                    <div class="d-inline p-2 table-active text-white rounded-bottom">
+                                        @Html.EditorFor(model => model.dsNV[i].hoTen, new
+                                        {
+                                            htmlAttributes = new
+                                            {
+                                                @class =
+                                            "form-control",
+                                                @readonly = "true"
+                                            }
+                                        })
+                                    </div>
+                                </div>
+                            </div>
+
+                            string idCheckBoxCa1 = "checkboxca1_" + count.ToString();
+                            string idTextBoxCa1 = "textboxca1_" + count.ToString();
+                            string idCheckBoxCa2 = "checkboxca2_" + count.ToString();
+                            string idTextBoxCa2 = "textboxca2_" + count.ToString();
+                            string idCheckBoxCa3 = "checkboxca3_" + count.ToString();
+                            string idTextBoxCa3 = "textboxca3_" + count.ToString();
+                            count++;
+                            <div class="form-group row">
+                                <label for="colFormLabelSm" class="col-sm-1 col-form-label col-form-label-sm">
+                                    Ca 1<span class="text-danger">
+                                        *
+                                    </span>
+                                </label>
+                                <div class="col-sm-5">
+                                    <div class="">
+                                        <input type="checkbox" class="" id=@idCheckBoxCa1
+                                               onclick="EnableDisableTextBox('@idCheckBoxCa1', '@idTextBoxCa1')" name="checkbox-ca1"
+                                               value="">
+                                        @Html.EditorFor(model => model.dsNV[i].SLCa1, new
+                                        {
+                                            htmlAttributes = new
+                                            {
+                                                    @class =
+                                                "",
+                                                    id = @idTextBoxCa1,
+                                                    disabled = "disabled"
+                                                }
+                                            })
+                                        suất
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="colFormLabelSm" class="col-sm-1 col-form-label col-form-label-sm">
+                                    Ca 2<span class="text-danger">
+                                        *
+                                    </span>
+                                </label>
+                                <div class="col-sm-5">
+                                    <div class="">
+                                        <input type="checkbox" class="" id=@idCheckBoxCa2
+                                               onclick="EnableDisableTextBox('@idCheckBoxCa2', '@idTextBoxCa2')" name="checkbox-ca1"
+                                               value="">
+                                        @Html.EditorFor(model => model.dsNV[i].SLCa2, new
+                                        {
+                                            htmlAttributes = new
+                                            {
+                                                    @class =
+                                                "",
+                                                    id = @idTextBoxCa2,
+                                                    disabled = "disabled"
+                                                }
+                                            })
+                                        suất
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="colFormLabelSm" class="col-sm-1 col-form-label col-form-label-sm">
+                                    Ca 3<span class="text-danger">
+                                        *
+                                    </span>
+                                </label>
+                                <div class="col-sm-5">
+                                    <div class="">
+                                        <input type="checkbox" class="" id=@idCheckBoxCa3
+                                               onclick="EnableDisableTextBox('@idCheckBoxCa3', '@idTextBoxCa3')" name="checkbox-ca1"
+                                               value="">
+                                        @Html.EditorFor(model => model.dsNV[i].SLCa3, new
+                                        {
+                                            htmlAttributes = new
+                                            {
+                                                    @class =
+                                                "",
+                                                    id = @idTextBoxCa3,
+                                                    disabled = "disabled"
+                                                }
+                                            })
+                                        suất
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        }
+                        <div class="row justify-content-end">
+                            <div class="form-group col-sm-6">
+                                <button type="submit" class="btn-block btn-primary">
+                                    Đăng ký
+                                </button>
+
+                            </div>
+
+                        </div>
+                        <div class="row justify-content-end">
+                            <div class="form-group col-sm-6">
+                                <button class="btn-block btn--warning">
+                                    <a href="~/Home/Index">Cancel</a>
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </form>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    function EnableDisableTextBox(checkbox_caAn, inputCaAn) {
+        var input_ca = document.getElementById(inputCaAn);
+        var checkbox_caAn = document.getElementById(checkbox_caAn)
+        input_ca.disabled = checkbox_caAn.checked ? false : true;
+        if (!input_ca.disabled) {
+            input_ca.focus();
+        }
+    }
+</script>

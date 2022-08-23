@@ -1,0 +1,118 @@
+﻿@using PagedList.Mvc;
+
+@model PagedList.IPagedList<Quanlicaan.Models.NhanVienModel>
+
+@{
+    ViewBag.Title = "Danh sách nhân viên";
+    //Layout = "~/Views/Shared/_Layout.cshtml";
+    int count = 1;
+
+}
+
+
+
+
+<div class="col mt-4">
+
+    <div class="card">
+        <div class="car-header">
+            <h2 style="text-align:center">danh sách người dùng</h2>
+
+        </div>
+        <div class="text-md-center"><a href="~/NhanVien/Add_Record" class="btn btn-info ">Add</a></div>
+        <div class="card-body">
+          @using (Html.BeginForm("Show", "NhanVien", FormMethod.Get))
+            {
+                <p></p>
+                <div class="form-group form-inline">
+                    Tìm kiếm nhân viên: @Html.TextBox("SearchString", "", new { @class = "form-control" })
+                    <input type="submit" class="btn btn-success" value="Search" />
+
+                </div>
+            }
+           
+            <table class="table table-striped table-inverse">
+                <thead class="">
+                    <tr class="text-md-center">
+                        <th class="align-middle">Họ và tên</th>
+                        <th class="align-middle">Phòng ban</th>
+                        <th class="align-middle">Quyền trên hệ thống</th>
+                        <th class="align-middle">Quyền đăng ký ca ăn</th>
+                        <th class="align-middle">Ngày sinh</th>
+                        <th class="align-middle">Giới tính</th>
+                        <th class="align-middle">Email</th>
+                        <th class="align-middle">Địa chỉ</th>
+                        <th class="align-middle">Số điện thoại</th>
+                        @*<th>Actions</th>*@
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            @*<td><input type="checkbox" class="form-check-inline"></td>
+                        <td> @count </td>*@
+                            <td> @item.hoTen</td>
+                            <td> @item.TenPhongBan </td>
+                            @{
+                                if (item.IDRole == 1)
+                                {
+                                    <td> admin </td>
+                                }
+                                else if (item.IDRole == 2)
+                                {
+                                    <td> user </td>
+                                }
+                            }
+
+                            <td> @item.quyen </td>
+                            <td>@string.Format("{0:dd/MM/yyyy}", @item.birthday)  </td>
+
+                            @{
+                                if (item.gioiTinh.Equals(true))
+                                {
+                                    <td>Nam </td>
+                                }
+                                else if (item.gioiTinh.Equals(false))
+                                {
+                                    <td>Nữ </td>
+                                }
+                                else
+                                {
+                                    <td>Undefined </td>
+                                }
+
+                            }
+                            <td> @item.email </td>
+                            <td> @item.address </td>
+                            <td> @item.phone </td>
+
+                            <td>
+                                <a href="~/NhanVien/Update_Record?ID=@item.ID" class="btn btn-outline-warning"><i class="fas fa-edit"></i></a>
+                                <a href="~/NhanVien/Delete_Record?ID=@item.ID" class="btn btn-outline-danger"><i class="fas fa-recycle"></i></a>
+                            </td>
+                        </tr>
+                        count++;
+                    }
+                </tbody>
+            </table>
+
+            <br />
+            <nav aria-label="Page navigation example">
+                Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
+                <ul class="pagination">
+                    <li class="page-item"> @Html.PagedListPager(Model, page => Url.Action("Show", new { page }))</li>
+
+                </ul>
+            </nav>
+
+
+
+        </div>
+    </div>
+</div>
+
+
+
+

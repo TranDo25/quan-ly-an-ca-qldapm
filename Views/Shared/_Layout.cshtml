@@ -1,0 +1,240 @@
+﻿@using Quanlicaan.Models;
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Title</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>@ViewBag.Title </title>
+    <link rel="stylesheet" href="~/assets/css/dangKiCaNhan.css">
+    <script src="~/assets/js/dangKiCaNhan.js"></script>
+    <!-- Bootstrap CSS -->
+
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="~/assets/css/navbar.css">
+    @*<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">*@
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    @RenderSection("head", required: false)
+</head>
+
+<body>
+    <div class="container-fluid px-0">
+        <nav class="navbar navbar-expand-md navbar-light bg-white p-0">
+            <a class="navbar-brand mr-4"
+               href="@Url.Action("Index","Home")"><strong>Quản lý ăn ca</strong></a>
+            <button class="navbar-toggler mr-3" type="button"
+                                                                                             data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
+                                                                                             aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    @{
+                        UserLoginModel userLogin = (UserLoginModel)Session["UserSession"];
+                        if (userLogin.IDRole == 1)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" href="#" id="navbarDropdown1" role="button"
+                                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Quản lý<span class="fa fa-angle-down"></span>
+                                </a>
+                                <div class="dropdown-menu" id="dropdown-menu1" aria-labelledby="navbarDropdown1">
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="row d-flex tab">
+                                                    <div class="fa-icon text-center"><span class="fa fa-shopping-cart"></span></div>
+                                                    <div class="d-flex flex-column">
+                                                        <a class="dropdown-item" href="@Url.Action("Show","NhanVien")">
+                                                            <h6 class="mb-0">Nhân viên</h6> <small class="text-muted">thao tác nhân viên</small>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="row d-flex tab">
+                                                    <div class="fa-icon text-center"> <span class="fa fa-gamepad"></span> </div>
+                                                    <div class="d-flex flex-column">
+                                                        <a class="dropdown-item" href="@Url.Action("Show","PhongBan")">
+                                                            <h6 class="mb-0">Phòng ban</h6> <small class="text-muted">thêm, sửa, xóa phòng ban</small>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </li>
+                        }
+                    }
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" id="navbarDropdown2" role="button"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Đăng ký ca ăn<span class="fa fa-angle-down"></span>
+                        </a>
+                        <div class="dropdown-menu" id="dropdown-menu2" aria-labelledby="navbarDropdown2">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="row d-flex tab">
+                                            <div class="fa-icon text-center"> <span class="fa fa-folder"></span> </div>
+                                            <div class="d-flex flex-column">
+                                                <a class="dropdown-item" href="@Url.Action("Index","CaAn")">
+                                                    <h6 class="mb-0">Đăng ký cá nhân</h6> <small class="text-muted">đăng ký cho bản thân</small>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @*<div class="col-md-6">
+                                        <div class="row d-flex tab">
+                                            <div class="fa-icon text-center"> <span class="fa fa-folder"></span> </div>
+                                            <div class="d-flex flex-column">
+                                                <a class="dropdown-item" href="@Url.Action("ShowDonCaNhan","CaAn")">
+                                                    <h6 class="mb-0">Xem đơn đã đăng ký</h6> <small class="text-muted">đăng ký cho bản thân</small>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>*@
+                                    @{ if (userLogin.quyen == "tap the")
+                                        {
+                                            <div class="col-md-6">
+                                                <div class="row d-flex tab">
+                                                    <div class="fa-icon text-center">
+                                                        <span class="fa fa-question"></span>
+                                                    </div>
+                                                    <div class="d-flex flex-column">
+                                                        <a class="dropdown-item" href="@Url.Action("Tapthe","CaAn")">
+                                                            <h6 class="mb-0">Đăng ký tập thể</h6> <small class="text-muted">đăng ký cho cả phòng </small>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+
+
+                                    }
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" id="navbarDropdown3" role="button"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Thống kê<span class="fa fa-angle-down"></span>
+                        </a>
+                        <div class="dropdown-menu" id="dropdown-menu3" aria-labelledby="navbarDropdown3">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="row d-flex tab">
+                                            <div class="fa-icon text-center"> <span class="fa fa-feed"></span> </div>
+                                            <div class="d-flex flex-column">
+                                                <a class="dropdown-item" href="@Url.Action("BCCanhan","BaoCao")">
+                                                    <h6 class="mb-0">Cá nhân</h6> <small class="text-muted">thống kê cá nhân</small>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @{
+                                        if (userLogin.IDRole == 1)
+                                        {
+                                            <div class="col-lg-6">
+                                                <div class="row d-flex tab">
+                                                    <div class="fa-icon text-center">
+                                                        <span class="fa fa-question"></span>
+                                                    </div>
+                                                    <div class="d-flex flex-column">
+                                                        <a class="dropdown-item" href="@Url.Action("ThongKeTheoNgay","BaoCao")">
+                                                            <h6 class="mb-0">Theo ngày</h6> <small class="text-muted">toàn bộ suất ăn theo ngày</small>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                    }
+
+                                </div>
+                                @{
+                                    if (userLogin.IDRole == 1)
+                                    {
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="row d-flex tab">
+                                                    <div class="fa-icon text-center"> <span class="fa fa-feed"></span> </div>
+                                                    <div class="d-flex flex-column">
+                                                        <a class="dropdown-item" href="@Url.Action("ThongKeTheoThang","BaoCao")">
+                                                            <h6 class="mb-0">Theo Tháng</h6> <small class="text-muted">toàn bộ suất ăn theo tháng</small>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    }
+                                }
+
+                            </div>
+                        </div>
+
+                    </li>
+
+                    @{
+                        var info = (UserLoginModel)Session["UserSession"];
+                    }
+                    @if (HttpContext.Current.Session["UserSession"] != null)
+                    {
+                        using (Html.BeginForm("logOut", "Login", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+                        {
+                            <li class="username2">
+
+                                <a class="nav-link" href="#" id="" role="button"
+                                   aria-haspopup="true" aria-expanded="false">
+                                    <b>@info.hoTen</b>
+                                </a>
+                            </li>
+                            <li class="username">
+                                <button type="submit" class="btn btn-danger">Đăng xuất</button>
+                            </li>
+
+
+
+                        }
+                    }
+
+
+
+
+
+                </ul>
+            </div>
+        </nav>
+
+    </div>
+    @RenderBody()
+        @RenderSection("footer", required: false)
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+    </script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+    </script>
+
+</body>
+
+</html>

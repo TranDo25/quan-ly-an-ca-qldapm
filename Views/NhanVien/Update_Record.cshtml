@@ -1,0 +1,156 @@
+﻿@model Quanlicaan.Models.NhanVienModel
+
+@{
+    ViewBag.Title = "Thêm mới nhân viên";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+
+
+}
+    @using (Html.BeginForm("Update_Record", "NhanVien", FormMethod.Post))
+    {
+        <section class="h-100 bg-dark">
+            <div class="container py-5 h-100">
+                <div class="row d-flex justify-content-center align-items-center h-100">
+                    <div class="col">
+                        <div class="card card-registration my-4">
+                            <div class="row g-0">
+                                <div class="col-xl-6 d-none d-xl-block">
+                                    <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-registration/img4.webp"
+                                         alt="Sample photo" class="img-fluid"
+                                         style="border-top-left-radius: .25rem; border-bottom-left-radius: .25rem;" />
+                                </div>
+                                <div class="col-xl-6">
+                                    <div class="card-body p-md-5 text-black">
+                                        <h3 class="mb-5 text-uppercase">CHỈNH SỬA THÔNG TIN NHÂN VIÊN</h3>
+                                        <div class="form-outline mb-4">
+                                            @Html.EditorFor(model => model.ID, new { htmlAttributes = new { id = "form3Example8", @class = "form-control form-control-lg", type="hidden" } })
+                          
+                                        </div>
+                                        <div class="form-outline mb-4">
+                                            @Html.EditorFor(model => model.hoTen, new { htmlAttributes = new { id = "form3Example8", @class = "form-control form-control-lg" } })
+                                            @Html.ValidationMessageFor(model => model.hoTen, "", new { @class = "text-danger" })<br />
+
+                                            <label class="form-label" for="form3Example8">Họ tên</label>
+                                        </div>
+
+
+                                        <div class="form-outline mb-4">
+                                            @Html.EditorFor(model => model.address, new { htmlAttributes = new { id = "form3Example8", @class = "form-control form-control-lg" } })
+                                            @Html.ValidationMessageFor(model => model.address, "", new { @class = "text-danger" })<br />
+                                            <label class="form-label" for="form3Example8">Địa chỉ</label>
+                                        </div>
+
+                                        <div class="d-md-flex justify-content-start align-items-center mb-4 py-2">
+
+                                            <h6 class="mb-0 me-4">Giới tính: </h6>
+
+                                            <div class="form-check form-check-inline mb-0 me-4">
+                                                @Html.RadioButtonFor(model => model.gioiTinh, true)
+
+                                                @Html.ValidationMessageFor(model => model.gioiTinh, "", new { @class = "text-danger" })<br />
+
+                                                <label class="form-check-label" for="femaleGender">Nam</label>
+                                            </div>
+
+                                            <div class="form-check form-check-inline mb-0 me-4">
+                                                @Html.RadioButtonFor(model => model.gioiTinh, false)
+                                                @Html.ValidationMessageFor(model => model.gioiTinh, "", new { @class = "text-danger" })<br />
+                                                <label class="form-check-label" for="maleGender">Nữ</label>
+                                            </div>
+
+
+
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-6 mb-4">
+
+                                                @Html.DropDownListFor(model => model.IDPhongBan, ViewBag.ListPhongBan as SelectList,
+                                                Convert.ToString(@Model.TenPhongBan), new { @class = "form-control" })
+                                                @Html.ValidationMessageFor(model => model.IDPhongBan, "", new
+                                                {
+                                                    @class =
+                                                "text-danger"
+                                                })
+
+
+                                            </div>
+                                            <div class="col-md-6 mb-4">
+                                                @Html.DropDownListFor(model => model.quyen, new List<SelectListItem>
+                                                    { new SelectListItem{Text="đăng ký tập thể", Value="tap the" },
+                                                    new SelectListItem{Text="đăng ký cá nhân", Value="ca nhan",Selected =true}}, new
+                                                                                    {
+                                                                                        @class = "form-control"
+                                                                                    })
+                                                @Html.ValidationMessageFor(model => model.quyen, "", new { @class = "text-danger" })
+
+
+                                            </div>
+
+                                        </div>
+                                        <div class="form-outline mb-4">
+                                            @Html.DropDownListFor(model => model.IDRole, new List<SelectListItem>
+                                                { new SelectListItem{Text="Admin", Value="1" },
+                                                new SelectListItem{Text="User", Value="2",Selected =true}}, new { @class = "form-control" })
+                                            
+                                            <label class="form-label" for="form3Example9">Cấp quyền</label>
+                                        </div>
+
+                                        <div class="form-outline mb-4">
+                                            @Html.TextBoxFor(m => m.birthday, "{0:yyyy-MM-dd}", new { @class = "form-control form-control-lg", id = "form3Example90", type = "date" })
+
+                                            @Html.ValidationMessageFor(model => model.birthday, "", new { @class = "text-danger" })<br />
+                                            <label class="form-label" for="form3Example9">DOB</label>
+                                        </div>
+                                        <div class="form-outline mb-4">
+                                            @Html.EditorFor(model => model.phone, new { htmlAttributes = new { @class = "form-control form-control-lg", id = "form3Example90", type = "tel" } })
+                                            @Html.ValidationMessageFor(model => model.phone, "", new { @class = "text-danger" })<br />
+
+                                            <label class="form-label" for="form3Example90">Số điện thoại</label>
+                                        </div>
+                                        <div class="form-outline mb-4">
+                                            @Html.EditorFor(model => model.username, new { htmlAttributes = new { @class = "form-control form-control-lg", id = "form3Example90" } })
+                                            @Html.ValidationMessageFor(model => model.username, "", new { @class = "text-danger" })<br />
+
+                                            <label class="form-label" for="form3Example90">Tên đăng nhập</label>
+                                        </div>
+
+                                        <div class="form-outline mb-4">
+                                            @Html.EditorFor(model => model.password, new { htmlAttributes = new { @class = "form-control form-control-lg",type="password", id = "form3Example99" } })
+                                            @Html.ValidationMessageFor(model => model.password, "", new { @class = "text-danger" })<br />
+
+                                            <label class="form-label" for="form3Example99">Mật khẩu</label>
+                                        </div>
+
+                                        <div class="form-outline mb-4">
+                                            @Html.EditorFor(model => model.email, new { htmlAttributes = new { @class = "form-control form-control-lg", id = "form3Example99", type = "email" } })
+                                            @Html.ValidationMessageFor(model => model.email, "", new { @class = "text-danger" })<br />
+
+                                            <label class="form-label" for="form3Example97">Email</label>
+                                        </div>
+                                        <div class="form-outline mb-4">
+                                            @Html.CheckBoxFor(model => model.trangThai, new { htmlAttributes = new { @class = "form-control form-control-lg", id = "form3Example90" } })
+                                            @Html.ValidationMessageFor(model => model.trangThai, "", new { @class = "text-danger" })
+
+                                            <label class="form-label" for="form3Example90">Active tài khoản</label>
+                                        </div>
+                                        <div class="d-flex justify-content-end pt-3">
+                                            <button type="button" class="btn btn-light btn-lg">
+                                                <a href="~/NhanVien/Show">Cancel</a>
+                                            </button>
+                                            <button type="submit" class="btn btn-warning btn-lg ms-2">Submit form</button>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    }
+
+ 
+

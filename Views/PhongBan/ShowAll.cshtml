@@ -1,0 +1,37 @@
+﻿@model IEnumerable<Quanlicaan.PhongBan>
+
+@{
+    ViewBag.Title = "Danh sách phòng ban";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    <link href="~/css/nv.css" rel="stylesheet" />
+}
+
+<h2>Danh sách phòng ban</h2>
+
+<p>
+    <a href="AddPB" class="btn btn-outline-primary">Thêm mới</a>
+
+</p>
+<table class="table-bordered">
+    <tr class="">
+        <th>ID </th>
+        <th>Tên Phòng Ban</th>
+        <th>Action</th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TenPB)
+            </td>
+            <td>
+                <a href="AddPB" class="btn btn-success">Update</a>
+                <a href="AddPB" class="btn btn-danger">Delete</a>
+            </td>
+        </tr>
+    }
+
+</table>
